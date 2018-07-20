@@ -100,13 +100,13 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (playerWon())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (compNearWin() != 0)
@@ -229,7 +229,7 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 					if (compWon())
 					{
 						ended = true;
-						victory = CreateWindow(TEXT("EDIT"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+						victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 						reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 					}
 					break;
@@ -241,13 +241,13 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (playerWon())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (compNearWin() != 0)
@@ -375,7 +375,7 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 					if (compWon())
 					{
 						ended = true;
-						victory = CreateWindow(TEXT("EDIT"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+						victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 						reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 					}
 					break;
@@ -387,13 +387,13 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (playerWon())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (compNearWin() != 0)
@@ -521,7 +521,7 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 					if (compWon())
 					{
 						ended = true;
-						victory = CreateWindow(TEXT("EDIT"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+						victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 						reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 					}
 					break;
@@ -533,13 +533,13 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (playerWon())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (compNearWin() != 0)
@@ -667,7 +667,7 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 					if (compWon())
 					{
 						ended = true;
-						victory = CreateWindow(TEXT("EDIT"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+						victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 						reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 					}
 					break;
@@ -679,13 +679,13 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (playerWon())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (compNearWin() != 0)
@@ -813,7 +813,7 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 					if (compWon())
 					{
 						ended = true;
-						victory = CreateWindow(TEXT("EDIT"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+						victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 						reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 					}
 					break;
@@ -825,13 +825,13 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (playerWon())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (compNearWin() != 0)
@@ -959,7 +959,7 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 					if (compWon())
 					{
 						ended = true;
-						victory = CreateWindow(TEXT("EDIT"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+						victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 						reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 					}
 					break;
@@ -971,13 +971,13 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (playerWon())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (compNearWin() != 0)
@@ -1110,7 +1110,7 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 					if (compWon())
 					{
 						ended = true;
-						victory = CreateWindow(TEXT("EDIT"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+						victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 						reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 					}
 					break;
@@ -1122,13 +1122,13 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (playerWon())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (compNearWin() != 0)
@@ -1256,7 +1256,7 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 					if (compWon())
 					{
 						ended = true;
-						victory = CreateWindow(TEXT("EDIT"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+						victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 						reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 					}
 					break;
@@ -1268,13 +1268,13 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (playerWon())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (compNearWin() != 0)
@@ -1401,7 +1401,7 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (compWon())
 						{
 							ended = true;
-							victory = CreateWindow(TEXT("EDIT"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
+							victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 					}
