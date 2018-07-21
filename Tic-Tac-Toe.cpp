@@ -2,6 +2,7 @@
 #include <tchar.h>
 #include <random>
 #include <time.h>
+#include <string>
 #define RESET_MENU 98
 
 LRESULT CALLBACK WndProc(_In_ HWND, _In_ UINT, _In_ WPARAM, _In_ LPARAM);
@@ -12,6 +13,7 @@ int compNearWin();
 int playerNearCenterWin();
 char board[10] = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' };
 bool ended = false;
+int wins = 0, losses = 0, ties = 0;
 
 int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
@@ -58,10 +60,13 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 	PAINTSTRUCT ps;
 	HDC hdc;
 	const unsigned center = 5, topLeft = 1, topMid = 2, topRight = 3, midLeft = 4, midRight = 6, botLeft = 7, botMid = 8, botRight = 9;
-	static HWND centerButton, topLeftButton, topMidButton, topRightButton, midLeftButton, midRightButton, botLeftButton, botMidButton, botRightButton, victory, reset;
+	static HWND centerButton, topLeftButton, topMidButton, topRightButton, midLeftButton, midRightButton, botLeftButton, botMidButton, botRightButton, victory, reset, title;
+	std::string eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+	std::wstring good = std::wstring(eh.begin(), eh.end());
 	switch (message)
 	{
 		case WM_CREATE:
+
 			centerButton = CreateWindow(TEXT("BUTTON"), (LPCWSTR)"", WS_CHILD | WS_VISIBLE, 200 - 13, 200 - 13, 26, 26, hWnd, (HMENU)center, NULL, NULL);
 			midLeftButton = CreateWindow(TEXT("BUTTON"), (LPCWSTR)"", WS_CHILD | WS_VISIBLE, 200 - 13 - 26, 200 - 13, 26, 26, hWnd, (HMENU)midLeft, NULL, NULL);
 			midRightButton = CreateWindow(TEXT("BUTTON"), (LPCWSTR)"", WS_CHILD | WS_VISIBLE, 200 + 13, 200 - 13, 26, 26, hWnd, (HMENU)midRight, NULL, NULL);
@@ -71,6 +76,7 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 			botLeftButton = CreateWindow(TEXT("BUTTON"), (LPCWSTR)"", WS_CHILD | WS_VISIBLE, 200 - 13 - 26, 200 + 13, 26, 26, hWnd, (HMENU)botLeft, NULL, NULL);
 			botMidButton = CreateWindow(TEXT("BUTTON"), (LPCWSTR)"", WS_CHILD | WS_VISIBLE, 200 - 13, 200 + 13, 26, 26, hWnd, (HMENU)botMid, NULL, NULL);
 			botRightButton = CreateWindow(TEXT("BUTTON"), (LPCWSTR)"", WS_CHILD | WS_VISIBLE, 200 + 13, 200 + 13, 26, 26, hWnd, (HMENU)botRight, NULL, NULL);
+			title = CreateWindow(TEXT("STATIC"), good.c_str(), WS_CHILD | WS_VISIBLE, 0, 20, 140, 60, hWnd, NULL, NULL, NULL);
 			break;
 		case WM_COMMAND:
 			switch (LOWORD(wParam))
@@ -91,21 +97,29 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 					SetWindowText(botLeftButton, _T(" "));
 					SetWindowText(botMidButton, _T(" "));
 					SetWindowText(botRightButton, _T(" "));
+					UpdateWindow(hWnd);
 					ended = false;
 				case center:
 					if (board[LOWORD(wParam)] == ' ' && !ended)
 					{
+						ShowWindow(victory, SW_HIDE);
 						SetWindowText(centerButton, _T("X"));
 						board[center] = 'X';
 						if (playerWon())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
@@ -229,6 +243,9 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 					if (compWon())
 					{
 						ended = true;
+						eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+						good = std::wstring(eh.begin(), eh.end());
+						SetWindowText(title, good.c_str());
 						victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 						reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 					}
@@ -241,12 +258,18 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (playerWon())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
@@ -375,6 +398,9 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 					if (compWon())
 					{
 						ended = true;
+						eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+						good = std::wstring(eh.begin(), eh.end());
+						SetWindowText(title, good.c_str());
 						victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 						reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 					}
@@ -387,12 +413,18 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (playerWon())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
@@ -521,6 +553,9 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 					if (compWon())
 					{
 						ended = true;
+						eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+						good = std::wstring(eh.begin(), eh.end());
+						SetWindowText(title, good.c_str());
 						victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 						reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 					}
@@ -533,12 +568,18 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (playerWon())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
@@ -667,6 +708,9 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 					if (compWon())
 					{
 						ended = true;
+						eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+						good = std::wstring(eh.begin(), eh.end());
+						SetWindowText(title, good.c_str());
 						victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 						reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 					}
@@ -679,12 +723,18 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (playerWon())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
@@ -813,6 +863,9 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 					if (compWon())
 					{
 						ended = true;
+						eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+						good = std::wstring(eh.begin(), eh.end());
+						SetWindowText(title, good.c_str());
 						victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 						reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 					}
@@ -825,12 +878,18 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (playerWon())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
@@ -959,6 +1018,9 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 					if (compWon())
 					{
 						ended = true;
+						eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+						good = std::wstring(eh.begin(), eh.end());
+						SetWindowText(title, good.c_str());
 						victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 						reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 					}
@@ -971,12 +1033,18 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (playerWon())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
@@ -1110,6 +1178,9 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 					if (compWon())
 					{
 						ended = true;
+						eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+						good = std::wstring(eh.begin(), eh.end());
+						SetWindowText(title, good.c_str());
 						victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 						reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 					}
@@ -1122,12 +1193,18 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (playerWon())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
@@ -1256,6 +1333,9 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 					if (compWon())
 					{
 						ended = true;
+						eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+						good = std::wstring(eh.begin(), eh.end());
+						SetWindowText(title, good.c_str());
 						victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 						reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 					}
@@ -1268,12 +1348,18 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (playerWon())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("You won!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
 						else if (catGame())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("Cat's game!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
@@ -1401,6 +1487,9 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 						if (compWon())
 						{
 							ended = true;
+							eh = "Wins:\t" + std::to_string(wins) + "\nLosses:\t" + std::to_string(losses) + "\nTies:\t" + std::to_string(ties);
+							good = std::wstring(eh.begin(), eh.end());
+							SetWindowText(title, good.c_str());
 							victory = CreateWindow(TEXT("STATIC"), TEXT("You lost!"), WS_CHILD | WS_VISIBLE, 0, 0, 140, 20, hWnd, NULL, NULL, NULL);
 							reset = CreateWindow(TEXT("BUTTON"), TEXT("Reset?"), WS_CHILD | WS_VISIBLE, 200 - 76 / 2, 0, 76, 30, hWnd, (HMENU)RESET_MENU, NULL, NULL);
 						}
@@ -1424,42 +1513,90 @@ LRESULT CALLBACK WndProc(_In_ HWND hWnd, _In_ UINT message, _In_ WPARAM wParam, 
 inline bool playerWon()
 {
 	if (board[1] == 'X' && board[2] == 'X' && board[3] == 'X')
+	{
+		wins++;
 		return true;
+	}
 	if (board[4] == 'X' && board[5] == 'X' && board[6] == 'X')
+	{
+		wins++;
 		return true;
+	}
 	if (board[7] == 'X' && board[8] == 'X' && board[9] == 'X')
+	{
+		wins++;
 		return true;
+	}
 	if (board[1] == 'X' && board[4] =='X' && board[7] == 'X')
+	{
+		wins++;
 		return true;
+	}
 	if (board[2] == 'X' && board[5] == 'X' && board[8] == 'X')
+	{
+		wins++;
 		return true;
+	}
 	if (board[3] == 'X' && board[6] == 'X' && board[9] == 'X')
+	{
+		wins++;
 		return true;
+	}
 	if (board[1] == 'X' && board[5] == 'X' && board[9] == 'X')
+	{
+		wins++;
 		return true;
+	}
 	if (board[3] == 'X' && board[5] == 'X' && board[7] == 'X')
+	{
+		wins++;
 		return true;
+	}
 	return false;
 }
 
 inline bool compWon()
 {
 	if (board[1] == 'O' && board[2] == 'O' && board[3] == 'O')
+	{
+		losses++;
 		return true;
+	}
 	if (board[4] == 'O' && board[5] == 'O' && board[6] == 'O')
+	{
+		losses++;
 		return true;
+	}
 	if (board[7] == 'O' && board[8] == 'O' && board[9] == 'O')
+	{
+		losses++;
 		return true;
+	}
 	if (board[1] == 'O' && board[4] == 'O' && board[7] == 'O')
+	{
+		losses++;
 		return true;
+	}
 	if (board[2] == 'O' && board[5] == 'O' && board[8] == 'O')
+	{
+		losses++;
 		return true;
+	}
 	if (board[3] == 'O' && board[6] == 'O' && board[9] == 'O')
+	{
+		losses++;
 		return true;
+	}
 	if (board[1] == 'O' && board[5] == 'O' && board[9] == 'O')
+	{
+		losses++;
 		return true;
+	}
 	if (board[3] == 'O' && board[5] == 'O' && board[7] == 'O')
+	{
+		losses++;
 		return true;
+	}
 	return false;
 }
 
@@ -1554,5 +1691,6 @@ bool catGame()
 		if (board[i] == ' ')
 			return false;
 	}
+	ties++;
 	return true;
 }
